@@ -1,6 +1,9 @@
 package main;
 
 import checker.Checker;
+import exec.Simulator;
+
+import java.io.IOException;
 
 /**
  * Class used to run the code
@@ -15,7 +18,8 @@ public final class Main {
      * @param args
      *          the arguments used to call the main method
      */
-    public static void main(final String[] args) {
+    public static void main(final String[] args) throws IOException {
+        Simulator.execute();
         Checker.calculateScore();
     }
 }
