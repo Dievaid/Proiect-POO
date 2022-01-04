@@ -15,4 +15,8 @@ public final class Constants {
         //constructor for checkstyle
     }
 
+    public static final int BABY = 5;
+    public static final int KID = 12;
+    public static final int TEEN = 18;
+    public static final Double MAX_SCORE = 10.0;
 }
