@@ -1,0 +1,23 @@
+Proiect, etapa 1 -> Programare orientată pe obiecte
+Student -> Capragiu David-Andrei, 324CA
+
+Organizarea codului:
+
+     Pentru evitarea codului de tip boilerplate, am folosit librăria lombok.
+          -> Ulterior am creat un branch în care nu se mai folosește lombok datorită erorilor de pe vmchecker :)
+          -> Please fix it!
+
+     Pentru accesul la baza de date de oriunde la runtime, m-am gândit că cel mai bine ar fi să folosesc
+Singleton pattern. (clasa Database din pachetul "exec") și tot din această bază de date să formez JSON-ul
+de output pentru a putea îndeplini o funcționalitate în plus
+
+     Clasele au fost distribuite în pachete asociate unui scop specific:
+        - pachetul "exec" -> Conține funcționalități necesare execuției
+        - pachetul "input.loader" -> Conține parsarea input-ului prin JSON
+      și simularea datelor.
+        - pachetul "models" -> Conține fiecare subclasă necesară pentru parsarea
+      input-ului prin ObjectMapper
+
+     Procesarea datelor se va face cu metoda "execute" din cadrul unei instanțe
+a clasei Simulator după copierea datelor în baza de date, în clasa Main
+        -> Se creează o instanță aferentă fiecărui set de date de intrare
