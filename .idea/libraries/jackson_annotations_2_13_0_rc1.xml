@@ -9,6 +9,8 @@
       <root url="jar://$PROJECT_DIR$/libs/org.json.simple-0.3-incubating.jar!/" />
     </CLASSES>
     <JAVADOC />
-    <SOURCES />
+    <SOURCES>
+      <root url="jar://$USER_HOME$/.ideaLibSources/lombok-1.18.20-sources.jar!/" />
+    </SOURCES>
   </library>
 </component>

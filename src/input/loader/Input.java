@@ -6,10 +6,6 @@ import models.AnnualChildren;
 import models.InitialData;
 import models.Product;
 import exec.Database;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
 
 import java.util.List;
 import java.util.ArrayList;
@@ -17,15 +13,13 @@ import java.util.LinkedHashSet;
 import java.util.HashMap;
 import java.util.Comparator;
 
-@Getter
-@Setter
-@AllArgsConstructor
-@NoArgsConstructor
 public class Input {
     private int numberOfYears;
     private int santaBudget;
     private InitialData initialData;
     private List<AnnualChange> annualChanges;
+
+    public Input() { }
 
     /**
      * Method used in the Database singleton, to fetch all the necessary data
@@ -178,5 +172,56 @@ public class Input {
                     AnnualChildren(new ArrayList<>(initialData.getChildren()));
             annualChildren.add(annualChildrenEntry);
         }
+    }
+
+    public final int getNumberOfYears() {
+        return numberOfYears;
+    }
+
+    public final void setNumberOfYears(final int numberOfYears) {
+        this.numberOfYears = numberOfYears;
+    }
+
+    public final int getSantaBudget() {
+        return santaBudget;
+    }
+
+    /**
+     * Setter
+     */
+    public final void setSantaBudget(final int santaBudget) {
+        this.santaBudget = santaBudget;
+    }
+
+    /**
+     * Getter
+     * @return initialData
+     */
+    public final InitialData getInitialData() {
+        return initialData;
+    }
+
+    /**
+     * Setter
+     * @param initialData change
+     */
+    public void setInitialData(final InitialData initialData) {
+        this.initialData = initialData;
+    }
+
+    /**
+     * Getter
+     * @return annualChanges
+     */
+    public final List<AnnualChange> getAnnualChanges() {
+        return annualChanges;
+    }
+
+    /**
+     * Setter
+     * @param annualChanges change
+     */
+    public void setAnnualChanges(final List<AnnualChange> annualChanges) {
+        this.annualChanges = annualChanges;
     }
 }

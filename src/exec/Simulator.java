@@ -3,16 +3,12 @@ package exec;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import common.Constants;
 import input.loader.Input;
-import lombok.Getter;
-import lombok.Setter;
 
 import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.file.Paths;
 
-@Getter
-@Setter
 public class Simulator {
     private Input input;
 
@@ -40,5 +36,12 @@ public class Simulator {
             writer.close();
             Database.clear();
         }
+    }
+
+    /**
+     * @return Getter for parsed input from JSON
+     */
+    public Input getInput() {
+        return input;
     }
 }

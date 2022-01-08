@@ -4,14 +4,10 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import models.AnnualChildren;
 import input.loader.Input;
-import lombok.Getter;
-import lombok.Setter;
 
 import java.util.ArrayList;
 import java.util.List;
 
-@Getter
-@Setter
 public final class Database {
     @JsonIgnore
     private static Database instance = new Database();
@@ -48,5 +44,19 @@ public final class Database {
      */
     public static void clear() {
         instance = new Database();
+    }
+
+    /**
+     * @return Getter for annual children
+     */
+    public List<AnnualChildren> getAnnualChildren() {
+        return annualChildren;
+    }
+
+    /**
+     * @param annualChildren Annual children list to be changed with
+     */
+    public void setAnnualChildren(final List<AnnualChildren> annualChildren) {
+        this.annualChildren = annualChildren;
     }
 }
