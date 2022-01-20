@@ -15,4 +15,5 @@ public class ChildChange {
     private int id;
     private Double niceScore;
     private List<String> giftsPreferences;
+    private String elf;
 }

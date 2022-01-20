@@ -16,4 +16,5 @@ public class AnnualChange {
     private List<Product> newGifts;
     private List<Child> newChildren;
     private List<ChildChange> childrenUpdates;
+    private String strategy;
 }

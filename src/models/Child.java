@@ -33,6 +33,12 @@ public class Child {
     private List<Double> niceScoreHistory;
 
     @JsonProperty(access = JsonProperty.Access.READ_ONLY)
+    private Double niceScoreBonus;
+
+    @JsonProperty(access = JsonProperty.Access.READ_ONLY)
+    private String elf;
+
+    @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     private Double assignedBudget;
 
     @JsonProperty(access = JsonProperty.Access.READ_ONLY)
