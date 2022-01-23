@@ -1,15 +1,19 @@
 package input.loader;
 
 import common.Constants;
-import models.AnnualChange;
+import factory.SharingStrategyFactory;
 import models.AnnualChildren;
+import models.AnnualChange;
+import models.Child;
 import models.InitialData;
 import models.Product;
+
 import exec.Database;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import strategy.YellowElfSharing;
 
 import java.util.List;
 import java.util.ArrayList;
@@ -64,20 +68,34 @@ public class Input {
 
         for (var child : initialData.getChildren()) {
             child.setAssignedBudget(budgetUnit * child.getAverageScore());
+            switch (child.getElf()) {
+                case "black" ->
+                        child.setAssignedBudget(child.getAssignedBudget()
+                                - child.getAssignedBudget()
+                                * Constants.SCALE / Constants.ONE_HUNDRED);
+                case "pink" ->
+                        child.setAssignedBudget(child.getAssignedBudget()
+                                + child.getAssignedBudget()
+                                * Constants.SCALE / Constants.ONE_HUNDRED);
+                default -> { }
+            }
             var budget = child.getAssignedBudget();
                 for (var giftPref : child.getGiftsPreferences()) {
-                    if (giftCategoryMap.get(giftPref) != null) {
+                    if (giftCategoryMap.containsKey(giftPref)) {
                         var giftsByCategory = giftCategoryMap.get(giftPref);
                         for (var gift : giftsByCategory) {
-                            if (budget >= gift.getPrice()) {
+                            if (budget >= gift.getPrice() && gift.getQuantity() > 0) {
                                 budget -= gift.getPrice();
                                 child.getReceivedGifts().add(gift);
+                                gift.setQuantity(gift.getQuantity() - 1);
                                 break;
                             }
                         }
                     }
                 }
         }
+        YellowElfSharing yellowElfSharing = new YellowElfSharing();
+        yellowElfSharing.share();
     }
 
     /**
@@ -88,8 +106,10 @@ public class Input {
     private Double calculateBudgetUnit() {
         Double budgetUnit = (double) santaBudget;
         Double sum = 0.0;
+        var orderedById = new ArrayList<>(initialData.getChildren());
+        orderedById.sort(Comparator.comparing(Child::getId));
 
-        for (var child : initialData.getChildren()) {
+        for (var child : orderedById) {
             sum += child.getAverageScore();
         }
 
@@ -100,7 +120,9 @@ public class Input {
      * Method used for calculating the average score for all children
      */
     public void calculateAverageForEveryChild() {
-        for (var child : initialData.getChildren()) {
+        var orderedById = new ArrayList<>(initialData.getChildren());
+        orderedById.sort(Comparator.comparing(Child::getId));
+        for (var child : orderedById) {
             Double avg = 0.0;
             if (child.getAge() < Constants.BABY) {
                 avg = Constants.MAX_SCORE;
@@ -119,6 +141,11 @@ public class Input {
                     sum += i;
                 }
                 avg /= sum;
+            }
+
+            avg += avg * child.getNiceScoreBonus() / Constants.ONE_HUNDRED;
+            if (avg > Constants.MAX_SCORE) {
+                avg = Constants.MAX_SCORE;
             }
             child.setAverageScore(avg);
         }
@@ -153,7 +180,7 @@ public class Input {
                                         LinkedHashSet<>(childUpdate.getGiftsPreferences());
                                 giftPrefs.addAll(child.getGiftsPreferences());
                                 child.setGiftsPreferences(new ArrayList<>(giftPrefs));
-                                calculateAverageForEveryChild();
+                                child.setElf(childUpdate.getElf());
                             }
                         }
                     }
@@ -169,11 +196,17 @@ public class Input {
                         initialData.getChildren().get(j)
                                 .setAverageScore(initialData.getChildren().get(j).getNiceScore());
                     }
+                    calculateAverageForEveryChild();
+                    SharingStrategyFactory
+                            .getSharingStrategy(annualChanges.get(i - 1)
+                                    .getStrategy())
+                            .share();
                 }
             }
             simulate();
             initialData.getChildren().removeIf(child -> child.getAge() > Constants.TEEN);
             var annualChildren = Database.getInstance().getAnnualChildren();
+            initialData.getChildren().sort(Comparator.comparing(Child::getId));
             var annualChildrenEntry = new
                     AnnualChildren(new ArrayList<>(initialData.getChildren()));
             annualChildren.add(annualChildrenEntry);
