@@ -1,23 +1,35 @@
-Proiect, etapa 1 -> Programare orientată pe obiecte
+Proiect, etapa 2 -> Programare orientată pe obiecte
 Student -> Capragiu David-Andrei, 324CA
 
 Organizarea codului:
 
      Pentru evitarea codului de tip boilerplate, am folosit librăria lombok.
           -> Ulterior am creat un branch în care nu se mai folosește lombok datorită erorilor de pe vmchecker :)
-          -> Please fix it!
+          -> Please fix it next year! Ar ajuta foarte mult studenții în următorii ani această librărie!
 
-     Pentru accesul la baza de date de oriunde la runtime, m-am gândit că cel mai bine ar fi să folosesc
-Singleton pattern. (clasa Database din pachetul "exec") și tot din această bază de date să formez JSON-ul
-de output pentru a putea îndeplini o funcționalitate în plus
+     Am folosit strategy pattern pentru atribuirea cadourilor, mai specific pentru ordonarea
+     în modul în care este specificat în cerință. Totodată, am creat și o strategie pentru elful
+     galben întrucât mi s-a părut mult mai simplificată organizarea codului.
 
-     Clasele au fost distribuite în pachete asociate unui scop specific:
-        - pachetul "exec" -> Conține funcționalități necesare execuției
-        - pachetul "input.loader" -> Conține parsarea input-ului prin JSON
-      și simularea datelor.
-        - pachetul "models" -> Conține fiecare subclasă necesară pentru parsarea
-      input-ului prin ObjectMapper
+         Am adăugat și un factory pattern pentru tipurile de ordonare la împărțirea cadourilor
+     În funcție de strategia dorită, prin metoda de generare pe care am dorit să o declar ca
+     fiind statică deoarece ar fi mult mai expresivă apelarea acesteia în codebase.
 
-     Procesarea datelor se va face cu metoda "execute" din cadrul unei instanțe
-a clasei Simulator după copierea datelor în baza de date, în clasa Main
-        -> Se creează o instanță aferentă fiecărui set de date de intrare
+         Totodată, am folosit și Builder pattern pentru implementarea scorului pe oraș
+     și pentru bonusul de cumințenie.
+
+          Clasele au fost distribuite în pachete asociate unui scop specific:
+             - pachetul "exec" -> Conține funcționalități necesare execuției
+             - pachetul "input.loader" -> Conține parsarea input-ului prin JSON
+           și simularea datelor.
+             - pachetul "models" -> Conține fiecare subclasă necesară pentru parsarea
+           input-ului prin ObjectMapper
+             - pachetul "strategy" -> Conține toate implementările necesare pentru
+     ordinea distribuirii cadourilor și a distribuirii cadourilor de către elful galben
+             - pachetul "factory" -> Conține factory-ul **doar** pentru strategiile de ordonare
+                 -> OBS: se va apela metoda share a interfeței SharingStrategy pentru ca schimbările
+     să aibă efect
+
+          Procesarea datelor se va face cu metoda "execute" din cadrul unei instanțe
+     a clasei Simulator după copierea datelor în baza de date, în clasa Main
+             -> Se creează o instanță aferentă fiecărui set de date de intrare
