@@ -1,9 +1,10 @@
 package models;
 
-import lombok.AllArgsConstructor;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Getter;
+import lombok.Setter;;
+import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 
 @Getter
 @Setter
@@ -13,5 +14,7 @@ public class Product {
     private String productName;
     private Double price;
     private String category;
+
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private int quantity;
 }
