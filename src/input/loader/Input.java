@@ -147,7 +147,8 @@ public class Input {
             if (avg > Constants.MAX_SCORE) {
                 avg = Constants.MAX_SCORE;
             }
-            child.setAverageScore(avg);
+            var builder = new Child.Builder().withAverageScore(avg).build();
+            child.setAverageScore(builder.getAverageScore());
         }
     }
 
