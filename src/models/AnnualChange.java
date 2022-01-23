@@ -7,6 +7,7 @@ public class AnnualChange {
     private List<Product> newGifts;
     private List<Child> newChildren;
     private List<ChildChange> childrenUpdates;
+    private String strategy;
 
     public AnnualChange(final int newSantaBudget, final List<Product> newGifts,
                         final List<Child> newChildren, final List<ChildChange> childrenUpdates) {
@@ -40,6 +41,22 @@ public class AnnualChange {
      */
     public List<Product> getNewGifts() {
         return newGifts;
+    }
+
+    /**
+     * Getter
+     * @return getter
+     */
+    public String getStrategy() {
+        return strategy;
+    }
+
+    /**
+     * Setter
+     * @param strategy change
+     */
+    public void setStrategy(final String strategy) {
+        this.strategy = strategy;
     }
 
     /**

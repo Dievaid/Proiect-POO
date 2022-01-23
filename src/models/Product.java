@@ -1,9 +1,14 @@
 package models;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 public class Product {
     private String productName;
     private Double price;
     private String category;
+
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+    private int quantity;
 
     public Product() { }
 
@@ -47,5 +52,19 @@ public class Product {
      */
     public void setCategory(final String category) {
         this.category = category;
+    }
+
+    /**
+     * Getter
+     */
+    public int getQuantity() {
+        return quantity;
+    }
+
+    /**
+     * Setter
+     */
+    public void setQuantity(final int quantity) {
+        this.quantity = quantity;
     }
 }
