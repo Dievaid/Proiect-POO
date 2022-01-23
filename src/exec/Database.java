@@ -19,6 +19,9 @@ public final class Database {
     @JsonProperty("annualChildren")
     private List<AnnualChildren> annualChildren = new ArrayList<>();
 
+    @JsonIgnore
+    private Input loadedInput = new Input();
+
     private Database() { }
 
     /**
@@ -37,6 +40,7 @@ public final class Database {
      * @param data -> parsed JSON data from a specific test file
      */
     public void fetchData(final Input data) {
+        this.loadedInput = data;
         data.simulateFirstYear();
         data.simulateAnnualChanges();
     }
